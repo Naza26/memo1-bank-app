@@ -59,7 +59,15 @@ public class AccountService {
         }
 
         Account account = accountRepository.findAccountByCbu(cbu);
-        account.setBalance(account.getBalance() + sum);
+        double depositAmount = sum;
+
+        if (sum >= 2000) {
+            // Calculate the bonus amount, top at $500
+            double bonus = Math.min(sum * 0.1, 500);
+            depositAmount += bonus;
+        }
+
+        account.setBalance(account.getBalance() + depositAmount);
         accountRepository.save(account);
 
         return account;
