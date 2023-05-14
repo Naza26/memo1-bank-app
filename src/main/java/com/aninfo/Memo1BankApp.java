@@ -93,10 +93,15 @@ public class Memo1BankApp {
 		return transactionService.getTransactions();
 	}
 
-	@GetMapping("/transactions/{cbu}")
-	public ResponseEntity<Transaction> getTransaction(@PathVariable Long cbu) {
-		Optional<Transaction> transactionOptional = transactionService.findById(cbu);
+	@GetMapping("/transactions/{id}")
+	public ResponseEntity<Transaction> getTransaction(@PathVariable Long id) {
+		Optional<Transaction> transactionOptional = transactionService.findById(id);
 		return ResponseEntity.of(transactionOptional);
+	}
+
+	@GetMapping("/accounts/transactions")
+	public Collection<Transaction> getAllTransactionsByAccount(@RequestParam Long cbu) {
+		return transactionService.findAllTransactionsByAccountId(cbu);
 	}
 
 	@DeleteMapping("/transactions/{cbu}")
